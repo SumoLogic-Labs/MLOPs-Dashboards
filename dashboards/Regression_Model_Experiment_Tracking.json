@@ -1,0 +1,325 @@
+{
+    "type": "DashboardV2SyncDefinition",
+    "name": "Regression Model Experiment Tracking",
+    "description": "",
+    "title": "Regression Model Experiment Tracking",
+    "theme": "Dark",
+    "topologyLabelMap": {
+        "data": {}
+    },
+    "refreshInterval": 0,
+    "timeRange": {
+        "type": "BeginBoundedTimeRange",
+        "from": {
+            "type": "RelativeTimeRangeBoundary",
+            "relativeTime": "-15m"
+        },
+        "to": null
+    },
+    "layout": {
+        "layoutType": "Grid",
+        "layoutStructures": [
+            {
+                "key": "panel4EBD5BA0A4BE894F",
+                "structure": "{\"height\":4,\"width\":8,\"x\":0,\"y\":40}"
+            },
+            {
+                "key": "panelF79E2663BBC8E948",
+                "structure": "{\"height\":3,\"width\":24,\"x\":0,\"y\":16}"
+            },
+            {
+                "key": "panelEF26B77CB823BB47",
+                "structure": "{\"height\":3,\"width\":24,\"x\":0,\"y\":29}"
+            },
+            {
+                "key": "panelPANE-79104C6395237941",
+                "structure": "{\"height\":10,\"width\":24,\"x\":0,\"y\":19}"
+            },
+            {
+                "key": "panelPANE-963DCFB6B567CB4B",
+                "structure": "{\"height\":8,\"width\":9,\"x\":0,\"y\":32}"
+            },
+            {
+                "key": "panel4EB795D9BBD70B44",
+                "structure": "{\"height\":7,\"width\":24,\"x\":0,\"y\":51}"
+            },
+            {
+                "key": "panel0FFCC30692E01B42",
+                "structure": "{\"height\":8,\"width\":15,\"x\":9,\"y\":32}"
+            },
+            {
+                "key": "panel59F86778B3394A40",
+                "structure": "{\"height\":4,\"width\":8,\"x\":8,\"y\":40}"
+            },
+            {
+                "key": "panel4A3F1C63B7B94A4F",
+                "structure": "{\"height\":4,\"width\":8,\"x\":16,\"y\":40}"
+            },
+            {
+                "key": "panelPANE-D83F2198AFA9694F",
+                "structure": "{\"height\":7,\"width\":24,\"x\":0,\"y\":44}"
+            }
+        ]
+    },
+    "panels": [
+        {
+            "id": null,
+            "key": "panel4EBD5BA0A4BE894F",
+            "title": "Best MAE",
+            "visualSettings": "{\"title\":{\"fontSize\":14},\"general\":{\"type\":\"svp\",\"displayType\":\"default\",\"roundDataPoints\":true,\"mode\":\"singleValueMetrics\"},\"svp\":{\"option\":\"Latest\",\"unitify\":false,\"textColor\":\"\",\"backgroundColor\":\"\",\"label\":\"\",\"useBackgroundColor\":true,\"useNoData\":false,\"noDataString\":\"\",\"hideData\":false,\"hideLabel\":false,\"rounding\":2,\"valueFontSize\":24,\"labelFontSize\":14,\"thresholds\":[{\"id\":0,\"value\":null,\"color\":\"#8c1c74\"}],\"sparkline\":{\"show\":false,\"color\":\"#222D3B\"},\"gauge\":{\"show\":false,\"min\":0,\"max\":100,\"showThreshold\":false,\"showThresholdMarker\":false}},\"series\":{}}",
+            "keepVisualSettingsConsistentWithParent": true,
+            "panelType": "SumoSearchPanel",
+            "queries": [
+                {
+                    "transient": false,
+                    "queryString": "_sourceCategory=ml_logs\n| where !isNull(predicted) and !isNull(expected)\n| abs(expected - predicted) as residuals\n| residuals*residuals as square_differ\n| count(expected) as total, sum(residuals) as sum_res, avg(residuals) as avg_res, sum(square_differ) as square_sum by exp_id\n| sum_res/total as mae\n| max(mae)",
+                    "queryType": "Logs",
+                    "queryKey": "A",
+                    "metricsQueryMode": null,
+                    "metricsQueryData": null,
+                    "tracesQueryData": null,
+                    "spansQueryData": null,
+                    "parseMode": "Auto",
+                    "timeSource": "Message",
+                    "outputCardinalityLimit": 1000
+                }
+            ],
+            "description": "",
+            "timeRange": null,
+            "coloringRules": null,
+            "linkedDashboards": []
+        },
+        {
+            "id": null,
+            "key": "panelF79E2663BBC8E948",
+            "title": "Regression Model",
+            "visualSettings": "{\"general\":{\"mode\":\"TextPanel\",\"type\":\"text\",\"displayType\":\"default\",\"roundDataPoints\":true},\"title\":{\"fontSize\":14},\"text\":{\"format\":\"markdownV2\",\"fontSize\":30,\"horizontalAlignment\":\"center\"},\"series\":{},\"legend\":{\"enabled\":false}}",
+            "keepVisualSettingsConsistentWithParent": true,
+            "panelType": "TextPanel",
+            "text": "Trained Model Insights"
+        },
+        {
+            "id": null,
+            "key": "panelEF26B77CB823BB47",
+            "title": "Regression Model",
+            "visualSettings": "{\"general\":{\"mode\":\"TextPanel\",\"type\":\"text\",\"displayType\":\"default\",\"roundDataPoints\":true},\"title\":{\"fontSize\":14},\"text\":{\"format\":\"markdownV2\",\"fontSize\":30,\"horizontalAlignment\":\"center\"},\"series\":{},\"legend\":{\"enabled\":false}}",
+            "keepVisualSettingsConsistentWithParent": true,
+            "panelType": "TextPanel",
+            "text": "Validation Data Insights"
+        },
+        {
+            "id": null,
+            "key": "panelPANE-79104C6395237941",
+            "title": "Model trainings",
+            "visualSettings": "{\"title\":{\"fontSize\":14},\"axes\":{\"axisX\":{\"titleFontSize\":12,\"labelFontSize\":12},\"axisY\":{\"titleFontSize\":12,\"labelFontSize\":12,\"logarithmic\":false}},\"legend\":{\"enabled\":true,\"verticalAlign\":\"bottom\",\"fontSize\":12,\"maxHeight\":50,\"showAsTable\":false,\"wrap\":true},\"color\":{\"family\":\"Categorical Default\"},\"series\":{},\"overrides\":[],\"general\":{\"type\":\"table\",\"displayType\":\"default\",\"roundDataPoints\":true,\"paginationPageSize\":100,\"fontSize\":12,\"mode\":\"timeSeries\"}}",
+            "keepVisualSettingsConsistentWithParent": true,
+            "panelType": "SumoSearchPanel",
+            "queries": [
+                {
+                    "transient": false,
+                    "queryString": "_sourceCategory = ml_logs\n| timeslice 1m\n| where !isNull(hyperparameters)\n| last(hyperparameters) as  %\"Hyper Parameters\", last(duration) as %\"Duration(min)\", last(in_memory) as %\"In Memory\", last(cpu) as %\"CPU Utilization\", last(model_size) as %\"Model Size(KB)\" by _timeslice, exp_id\n| fields exp_id, %\"Hyper Parameters\", %\"Duration(min)\", %\"Model Size(KB)\", %\"CPU Utilization\", %\"In Memory\"",
+                    "queryType": "Logs",
+                    "queryKey": "A",
+                    "metricsQueryMode": null,
+                    "metricsQueryData": null,
+                    "tracesQueryData": null,
+                    "spansQueryData": null,
+                    "parseMode": "Auto",
+                    "timeSource": "Message",
+                    "outputCardinalityLimit": 1000
+                }
+            ],
+            "description": "",
+            "timeRange": {
+                "type": "BeginBoundedTimeRange",
+                "from": {
+                    "type": "RelativeTimeRangeBoundary",
+                    "relativeTime": "-1d"
+                },
+                "to": null
+            },
+            "coloringRules": null,
+            "linkedDashboards": []
+        },
+        {
+            "id": null,
+            "key": "panelPANE-963DCFB6B567CB4B",
+            "title": "Model evaluation metrics",
+            "visualSettings": "{\"title\":{\"fontSize\":14},\"axes\":{\"axisX\":{\"titleFontSize\":12,\"labelFontSize\":12},\"axisY\":{\"titleFontSize\":12,\"labelFontSize\":12,\"logarithmic\":false}},\"legend\":{\"enabled\":true,\"verticalAlign\":\"bottom\",\"fontSize\":12,\"maxHeight\":50,\"showAsTable\":false,\"wrap\":true},\"color\":{\"family\":\"Categorical Default\"},\"series\":{},\"general\":{\"type\":\"table\",\"displayType\":\"default\",\"roundDataPoints\":true,\"paginationPageSize\":100,\"fontSize\":12,\"mode\":\"timeSeries\"}}",
+            "keepVisualSettingsConsistentWithParent": true,
+            "panelType": "SumoSearchPanel",
+            "queries": [
+                {
+                    "transient": false,
+                    "queryString": "_sourceCategory=ml_logs\n| where !isNull(predicted) and !isNull(expected)\n| abs(expected - predicted) as residuals\n| residuals*residuals as square_differ\n| count(expected) as total, sum(residuals) as sum_res, avg(residuals) as avg_res, sum(square_differ) as square_sum by exp_id\n| sum_res/total as mae\n| square_sum/total as mse\n| sqrt(mse) as rmse\n| fields exp_id, mae, mse, rmse, avg_res\n",
+                    "queryType": "Logs",
+                    "queryKey": "A",
+                    "metricsQueryMode": null,
+                    "metricsQueryData": null,
+                    "tracesQueryData": null,
+                    "spansQueryData": null,
+                    "parseMode": "Auto",
+                    "timeSource": "Message",
+                    "outputCardinalityLimit": 1000
+                }
+            ],
+            "description": "",
+            "timeRange": null,
+            "coloringRules": null,
+            "linkedDashboards": []
+        },
+        {
+            "id": null,
+            "key": "panel4EB795D9BBD70B44",
+            "title": "Compare expected vs predicted",
+            "visualSettings": "{\"title\":{\"fontSize\":14},\"axes\":{\"axisX\":{\"titleFontSize\":12,\"labelFontSize\":12},\"axisY\":{\"titleFontSize\":12,\"labelFontSize\":12,\"logarithmic\":false}},\"legend\":{\"enabled\":true,\"verticalAlign\":\"bottom\",\"fontSize\":12,\"maxHeight\":50,\"showAsTable\":false,\"wrap\":true},\"color\":{\"family\":\"Categorical Default\"},\"series\":{},\"general\":{\"type\":\"line\",\"displayType\":\"default\",\"roundDataPoints\":true,\"markerSize\":5,\"lineDashType\":\"solid\",\"markerType\":\"none\",\"lineThickness\":1,\"mode\":\"timeSeries\"},\"overrides\":[]}",
+            "keepVisualSettingsConsistentWithParent": true,
+            "panelType": "SumoSearchPanel",
+            "queries": [
+                {
+                    "transient": false,
+                    "queryString": "_sourceCategory=ml_logs\n| where !isNull(predicted) and !isNull(expected)\n| timeslice 1m\n| last(predicted) as pred, last(expected) as act by _timeslice, exp_id\n| transpose row _timeslice column exp_id\n| fields - _timeslice",
+                    "queryType": "Logs",
+                    "queryKey": "A",
+                    "metricsQueryMode": null,
+                    "metricsQueryData": null,
+                    "tracesQueryData": null,
+                    "spansQueryData": null,
+                    "parseMode": "Auto",
+                    "timeSource": "Message",
+                    "outputCardinalityLimit": 1000
+                }
+            ],
+            "description": "",
+            "timeRange": null,
+            "coloringRules": null,
+            "linkedDashboards": []
+        },
+        {
+            "id": null,
+            "key": "panel0FFCC30692E01B42",
+            "title": "Comparative analysis",
+            "visualSettings": "{\"title\":{\"fontSize\":14},\"axes\":{\"axisX\":{\"titleFontSize\":12,\"labelFontSize\":12},\"axisY\":{\"titleFontSize\":12,\"labelFontSize\":12,\"logarithmic\":false}},\"legend\":{\"enabled\":true,\"verticalAlign\":\"bottom\",\"fontSize\":12,\"maxHeight\":50,\"showAsTable\":false,\"wrap\":true},\"color\":{\"family\":\"Diverging 2\"},\"series\":{},\"overrides\":[],\"general\":{\"type\":\"bar\",\"displayType\":\"default\",\"roundDataPoints\":true,\"fillOpacity\":1,\"mode\":\"timeSeries\"}}",
+            "keepVisualSettingsConsistentWithParent": true,
+            "panelType": "SumoSearchPanel",
+            "queries": [
+                {
+                    "transient": false,
+                    "queryString": "_sourceCategory=ml_logs\n| where !isNull(predicted) and !isNull(expected)\n| abs(expected - predicted) as residuals\n| residuals*residuals as square_differ\n| count(expected) as total, sum(residuals) as sum_res, avg(residuals) as avg_res, sum(square_differ) as square_sum by exp_id\n| sum_res/total as mae\n| square_sum/total as mse\n| sqrt(mse) as rmse\n| fields exp_id, mae, mse, rmse, avg_res",
+                    "queryType": "Logs",
+                    "queryKey": "A",
+                    "metricsQueryMode": null,
+                    "metricsQueryData": null,
+                    "tracesQueryData": null,
+                    "spansQueryData": null,
+                    "parseMode": "Auto",
+                    "timeSource": "Message",
+                    "outputCardinalityLimit": 1000
+                }
+            ],
+            "description": "",
+            "timeRange": null,
+            "coloringRules": null,
+            "linkedDashboards": []
+        },
+        {
+            "id": null,
+            "key": "panel59F86778B3394A40",
+            "title": "Best MAE",
+            "visualSettings": "{\"title\":{\"fontSize\":14},\"general\":{\"type\":\"svp\",\"displayType\":\"default\",\"roundDataPoints\":true,\"mode\":\"singleValueMetrics\"},\"svp\":{\"option\":\"Latest\",\"unitify\":false,\"textColor\":\"\",\"backgroundColor\":\"\",\"label\":\"\",\"useBackgroundColor\":true,\"useNoData\":false,\"noDataString\":\"\",\"hideData\":false,\"hideLabel\":false,\"rounding\":2,\"valueFontSize\":24,\"labelFontSize\":14,\"thresholds\":[{\"id\":0,\"value\":null,\"color\":\"#b4950c\"}],\"sparkline\":{\"show\":false,\"color\":\"#222D3B\"},\"gauge\":{\"show\":false,\"min\":0,\"max\":100,\"showThreshold\":false,\"showThresholdMarker\":false}},\"series\":{}}",
+            "keepVisualSettingsConsistentWithParent": true,
+            "panelType": "SumoSearchPanel",
+            "queries": [
+                {
+                    "transient": false,
+                    "queryString": "_sourceCategory=ml_logs\n| where !isNull(predicted) and !isNull(expected)\n| abs(expected - predicted) as residuals\n| residuals*residuals as square_differ\n| count(expected) as total, sum(residuals) as sum_res, avg(residuals) as avg_res, sum(square_differ) as square_sum by exp_id\n| square_sum/total as mse\n| max(mse)",
+                    "queryType": "Logs",
+                    "queryKey": "A",
+                    "metricsQueryMode": null,
+                    "metricsQueryData": null,
+                    "tracesQueryData": null,
+                    "spansQueryData": null,
+                    "parseMode": "Auto",
+                    "timeSource": "Message",
+                    "outputCardinalityLimit": 1000
+                }
+            ],
+            "description": "",
+            "timeRange": null,
+            "coloringRules": null,
+            "linkedDashboards": []
+        },
+        {
+            "id": null,
+            "key": "panel4A3F1C63B7B94A4F",
+            "title": "Best RMSE",
+            "visualSettings": "{\"title\":{\"fontSize\":14},\"general\":{\"type\":\"svp\",\"displayType\":\"default\",\"roundDataPoints\":true,\"mode\":\"singleValueMetrics\"},\"svp\":{\"option\":\"Latest\",\"unitify\":false,\"textColor\":\"\",\"backgroundColor\":\"\",\"label\":\"\",\"useBackgroundColor\":true,\"useNoData\":false,\"noDataString\":\"\",\"hideData\":false,\"hideLabel\":false,\"rounding\":2,\"valueFontSize\":24,\"labelFontSize\":14,\"thresholds\":[{\"id\":0,\"value\":null,\"color\":\"#6cae01\"}],\"sparkline\":{\"show\":false,\"color\":\"#222D3B\"},\"gauge\":{\"show\":false,\"min\":0,\"max\":100,\"showThreshold\":false,\"showThresholdMarker\":false}},\"series\":{}}",
+            "keepVisualSettingsConsistentWithParent": true,
+            "panelType": "SumoSearchPanel",
+            "queries": [
+                {
+                    "transient": false,
+                    "queryString": "_sourceCategory=ml_logs\n| where !isNull(predicted) and !isNull(expected)\n| abs(expected - predicted) as residuals\n| residuals*residuals as square_differ\n| count(expected) as total, sum(residuals) as sum_res, avg(residuals) as avg_res, sum(square_differ) as square_sum by exp_id\n| square_sum/total as mse\n| sqrt(mse) as rmse\n| max(rmse)",
+                    "queryType": "Logs",
+                    "queryKey": "A",
+                    "metricsQueryMode": null,
+                    "metricsQueryData": null,
+                    "tracesQueryData": null,
+                    "spansQueryData": null,
+                    "parseMode": "Auto",
+                    "timeSource": "Message",
+                    "outputCardinalityLimit": 1000
+                }
+            ],
+            "description": "",
+            "timeRange": null,
+            "coloringRules": null,
+            "linkedDashboards": []
+        },
+        {
+            "id": null,
+            "key": "panelPANE-D83F2198AFA9694F",
+            "title": "Residuals",
+            "visualSettings": "{\"general\":{\"mode\":\"timeSeries\",\"type\":\"line\",\"displayType\":\"default\",\"roundDataPoints\":true,\"markerSize\":5,\"lineDashType\":\"solid\",\"markerType\":\"none\",\"lineThickness\":1},\"title\":{\"fontSize\":14},\"axes\":{\"axisX\":{\"titleFontSize\":12,\"labelFontSize\":12},\"axisY\":{\"titleFontSize\":12,\"labelFontSize\":12,\"logarithmic\":false}},\"legend\":{\"enabled\":true,\"verticalAlign\":\"bottom\",\"fontSize\":12,\"maxHeight\":50,\"showAsTable\":false,\"wrap\":true},\"color\":{\"family\":\"Categorical Default\"},\"series\":{},\"overrides\":[]}",
+            "keepVisualSettingsConsistentWithParent": true,
+            "panelType": "SumoSearchPanel",
+            "queries": [
+                {
+                    "transient": false,
+                    "queryString": "_sourceCategory=ml_logs\n| where !isNull(predicted) and !isNull(expected)\n| abs(expected - predicted) as residuals\n| timeslice 1m\n| last(residuals) as residuals by _timeslice, exp_id\n| transpose row _timeslice column exp_id\n| fields - _timeslice\n",
+                    "queryType": "Logs",
+                    "queryKey": "A",
+                    "metricsQueryMode": null,
+                    "metricsQueryData": null,
+                    "tracesQueryData": null,
+                    "spansQueryData": null,
+                    "parseMode": "Auto",
+                    "timeSource": "Message",
+                    "outputCardinalityLimit": 1000
+                }
+            ],
+            "description": "",
+            "timeRange": null,
+            "coloringRules": null,
+            "linkedDashboards": []
+        }
+    ],
+    "variables": [
+        {
+            "id": null,
+            "name": "ExperimentID",
+            "displayName": "ExperimentID",
+            "defaultValue": "*",
+            "sourceDefinition": {
+                "variableSourceType": "LogQueryVariableSourceDefinition",
+                "query": "_sourceCategory=ml_logs | fields exp_id",
+                "field": "exp_id"
+            },
+            "allowMultiSelect": true,
+            "includeAllOption": true,
+            "hideFromUI": false,
+            "valueType": "Any"
+        }
+    ],
+    "coloringRules": []
+}
